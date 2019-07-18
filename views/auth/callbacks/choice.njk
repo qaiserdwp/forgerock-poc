@@ -1,0 +1,16 @@
+<div class="govuk-form-group">
+    <h2 class="govuk-heading-m">{{ prompt }}</h2>
+
+    <fieldset class="govuk-fieldset">
+        <div class="govuk-radios">
+            {% for choice in choices %}
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" type="radio" name="callbacks[{{ callbackIndex }}]" id="choice-{{ loop.index0 }}" value="{{ loop.index0 }}"{{ ' checked' if loop.index0 == defaultChoice }} />
+                    <label class="govuk-label govuk-label--s govuk-radios__label" for="choice-{{ loop.index0 }}">
+                        {{ choice }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </fieldset>
+</div>
