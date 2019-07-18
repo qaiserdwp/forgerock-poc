@@ -8,6 +8,10 @@ const nunjucks = require("nunjucks");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const eligibilityRouter = require("./routes/eligibility");
+const profileRouter = require("./routes/profile");
+const todolistRouter = require("./routes/todolist");
+const duplicateRouter = require("./routes/duplicate");
 
 const app = express();
 
@@ -40,5 +44,9 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 app.use(authRouter);
+app.use("/eligibility", eligibilityRouter);
+app.use("/profile", profileRouter);
+app.use("/todolist", todolistRouter);
+app.use("/duplicate-gateway-account", duplicateRouter);
 
 module.exports = app;

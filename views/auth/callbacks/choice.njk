@@ -1,16 +1,32 @@
-<div class="govuk-form-group">
-    <h2 class="govuk-heading-m">{{ prompt }}</h2>
 
-    <fieldset class="govuk-fieldset">
-        <div class="govuk-radios">
-            {% for choice in choices %}
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" type="radio" name="callbacks[{{ callbackIndex }}]" id="choice-{{ loop.index0 }}" value="{{ loop.index0 }}"{{ ' checked' if loop.index0 == defaultChoice }} />
-                    <label class="govuk-label govuk-label--s govuk-radios__label" for="choice-{{ loop.index0 }}">
-                        {{ choice }}
-                    </label>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <!-- <h2 class="govuk-heading-m">{{ prompt }}</h2>-->
+
+            <fieldset class="govuk-fieldset">
+                <div class="govuk-radios">
+                    {% for choice in choices %}
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" type="radio" name="callbacks[{{ callbackIndex }}]" id="choice-{{ loop.index0 }}" value="{{ loop.index0 }}"{{ ' checked' if loop.index0 == defaultChoice }} />
+                            <label class="govuk-label govuk-label--s govuk-radios__label" for="choice-{{ loop.index0 }}">
+                                {% if choice == 'Google IDP' %}
+                                    Sign in with Google
+                                {% else %}
+                                    Sign in with Government Gateway
+                                {% endif %}
+                            </label>
+                            <span class="govuk-hint govuk-radios__hint">
+                                {% if choice == 'Google IDP' %}
+                                    You’ll have an account if you use Gmail.
+                                {% else %}
+                                    You’ll have a user ID if you’ve registered for Self Assessment or filed a tax return online before.
+                                {% endif %}
+                            </span>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </fieldset>
         </div>
-    </fieldset>
+    </div>
 </div>
