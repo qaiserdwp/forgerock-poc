@@ -1,0 +1,46 @@
+{% extends "_layout.njk" %}
+{% from "radios/macro.njk" import govukRadios %}
+{% from "button/macro.njk" import govukButton %}
+{% block content %}
+<h1 class="govuk-heading-xl">Set up 2-step verification
+    <span class="govuk-caption-m">You’ll need to use Google Authenticator or SMS to protect your account.</span>
+</h1>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        {{ govukRadios({
+        idPrefix: "mfa",
+        name: "mfa",
+        items: [
+        {
+        value: "googleauth",
+        text: "Google Authenticator",
+        label: {
+        classes: "govuk-label--s"
+        },
+        hint: {
+        text: "Google Authenticator is a free app available for iPhone and Android."
+        }
+        },
+
+        {
+        value: "sms",
+        text: "SMS code",
+        label: {
+        classes: "govuk-label--s"
+        },
+        hint: {
+        text: "One-time code sent via SMS text message."
+        }
+        }
+        ]
+        }) }}
+
+        {{ govukButton({
+        text: "Continue"
+        }) }}
+    </div>
+    <div class="govuk-grid-column-one-third"></div>
+</div>
+{% endblock %}

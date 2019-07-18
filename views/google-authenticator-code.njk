@@ -1,0 +1,28 @@
+{% extends "_layout.njk" %}
+{% from "input/macro.njk" import govukInput %}
+{% from "button/macro.njk" import govukButton %}
+
+{% block content %}
+<div class="govuk-grid-row">
+
+    <h1 class="govuk-heading-xl">Enter verification code</h1>
+    <div class="govuk-grid-column-two-thirds">
+        {{ govukInput({
+        label: {
+        text: "Verification code from Google Authenticator",
+        classes: "govuk-!-font-weight-bold"
+        },
+        hint: {
+        text: "You can find this by checking your Google Authenticator app. It is a six digit code number."
+        },
+        classes: "govuk-input--width-10",
+        id: "authenticator",
+        name: "authenticator"
+        }) }}
+        <p class="govuk-body"><a href="#">Use recovery code</a></p>
+        {{ govukButton({
+        text: "Continue"
+        }) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "_layout.njk" %}
+{% from "button/macro.njk" import govukButton %}
+
+{% block content %}
+<div class="govuk-grid-row">
+
+    <h1 class="govuk-heading-xl">Enter SMS code</h1>
+    {{ govukInput({
+    label: {
+    text: "Eight digit code from DWP",
+    classes: "govuk-!-font-weight-bold"
+    },
+    hint: {
+    text: "This should arrive with 2-3 minutes."
+    },
+    classes: "govuk-input--width-10",
+    id: "dob",
+    name: "dob"
+    }) }}
+
+    {{ govukButton({
+    text: "Continue"
+    }) }}
+    <div class="govuk-grid-column-two-thirds">
+    </div>
+</div>
+{% endblock %}

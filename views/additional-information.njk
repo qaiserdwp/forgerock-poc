@@ -1,0 +1,43 @@
+{% extends "_layout.njk" %}
+{% from "date-input/macro.njk" import govukDateInput %}
+{% from "input/macro.njk" import govukInput %}
+{% from "button/macro.njk" import govukButton %}
+
+{% block content %}
+<div class="govuk-grid-row">
+
+    <h1 class="govuk-heading-xl">Additional information</h1>
+    {{ govukInput({
+    label: {
+    text: "Date of birth",
+    classes: "govuk-!-font-weight-bold"
+    },
+    hint: {
+    text: "We need this to help us find your customer record. Use dd/mm/yy."
+    },
+    classes: "govuk-input--width-10",
+    id: "dob",
+    name: "dob"
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: "Mobile phone number",
+    classes: "govuk-!-font-weight-bold"
+    },
+    classes: "govuk-fieldset__legend--m",
+    hint: {
+    text: "We will use this to send you a confirmation code."
+    },
+    classes: "govuk-input--width-20",
+    id: "telephone",
+    name: "telephone"
+    }) }}
+
+    {{ govukButton({
+    text: "Continue"
+    }) }}
+    <div class="govuk-grid-column-two-thirds">
+    </div>
+</div>
+{% endblock %}

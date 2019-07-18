@@ -1,0 +1,62 @@
+{% extends "_layout.njk" %}
+
+{% from "button/macro.njk" import govukButton %}
+{% from "radios/macro.njk" import govukRadios %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-width">
+        <h1 class="govuk-heading-xl">
+            Eligibility criteria for Universal Credit
+        </h1>
+        <p class="govuk-body">You may be able to get Universal Credit if:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>you&rsquo;re on a low income or out of work</li>
+            <li>you&rsquo;re 18 or over (there are some exceptions if you&rsquo;re 16 to 17)</li>
+            <li>you&rsquo;re under State Pension age (or your partner is)</li>
+            <li>you and your partner have &pound;16,000 or less in savings between you</li>
+            <li>you live in the UK</li>
+        </ul>
+        <div class="govuk-warning-text" style="width: 70%">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                Although you can make your application from Universal Credit from outside the UK, you must live in the UK to be eligible for Universal Credit.
+            </strong>
+        </div>
+        {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "eligibility",
+        name: "eligibility",
+        fieldset: {
+        legend: {
+        text: "Do you live in the UK?",
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
+        }
+        },
+        hint: {
+        text: "As part of your claimant commitment, you must be a permanent UK resident."
+        },
+        items: [
+        {
+        value: "yes",
+        text: "Yes"
+        },
+        {
+        value: "no",
+        text: "No"
+        }
+        ]
+        }) }}
+
+        {{ govukButton({
+        text: "Confirm eligibility"
+        }) }}
+    </div>
+</div>
+{% endblock %}
+
+ssh -i id_rsa forgerock@dwp.frdpcloud.com
