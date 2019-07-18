@@ -1,0 +1,56 @@
+{% extends "_layout.njk" %}
+{% from "table/macro.njk" import govukTable %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Profile</h1>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+{{ govukTable({
+firstCellIsHeader: true,
+rows: [
+[
+{
+text: "Username"
+},
+{
+text: "google-103506679181169841890"
+}
+],
+[
+{
+text: "First name"
+},
+{
+text: "ForgeRock"
+}
+],
+[
+{
+text: "Last name"
+},
+{
+text: "PoC"
+}
+],
+[
+{
+text: "Email"
+},
+{
+text: "forgerock.dwp.poc@gmail.com"
+}
+],
+[
+{
+text: "Telephone"
+},
+{
+text: "0123456789"
+}
+]
+]
+}) }}
+    </div>
+</div>
+<p class="govuk-body"><a href="todolist">To do list</a></p>
+{% endblock %}
