@@ -1,0 +1,9 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+{% if authorised %}
+    <h1>Yay, you can access this resource. Go wild...</h1>
+{% else %}
+    <h1>Sorry, you are not authorised to access this resource</h1>
+{% endif %}
+{% endblock %}
