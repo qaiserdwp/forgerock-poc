@@ -29,6 +29,22 @@ function renderPasswordCallback(renderer, {output}, callbackIndex) {
   });
 }
 
+function renderTextOutputCallback(renderer, {output}) {
+  const message = output.find(chunk => chunk.name === 'message');
+
+  return renderer('auth/callbacks/text.njk', {
+    message: message.value,
+  });
+}
+
+function renderConfirmationCallback(renderer, {output}) {
+  const options = output.find(chunk => chunk.name === 'options');
+
+  return renderer('auth/callbacks/confirmation.njk', {
+    options: options.value,
+  });
+}
+
 exports.renderCallbacks = function renderCallbacks(renderer, callbacks) {
   return callbacks.map((callback, i) => {
     switch (callback.type) {
@@ -38,6 +54,10 @@ exports.renderCallbacks = function renderCallbacks(renderer, callbacks) {
         return renderNameCallback(renderer, callback, i);
       case 'PasswordCallback':
         return renderPasswordCallback(renderer, callback, i);
+      case 'TextOutputCallback':
+        return renderTextOutputCallback(renderer, callback);
+      case 'ConfirmationCallback':
+        return renderConfirmationCallback(renderer, callback);
       default:
         console.log('unknown callback', callback);
         throw new Error('unknown callback type');
