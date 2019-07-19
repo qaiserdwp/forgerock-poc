@@ -10,7 +10,7 @@ const startingPointUrl = 'https://dwp.frdpcloud.com/openam/json/realms/root/auth
 
 function renderAuthPage(req, res, payload) {
   console.log('rendering response');
-  res.render('auth/start.njk', {
+  res.render('auth/flow.njk', {
     callbacks: renderCallbacks(nunjucks.render, payload.callbacks),
   });
 }
