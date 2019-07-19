@@ -7,16 +7,22 @@ const {renderCallbacks, extractRedirect} = require('../auth/callbacks');
 const router = express.Router();
 
 const authenticateUrl = 'https://dwp.frdpcloud.com/openam/json/realms/root/authenticate?service=ADAM&authIndexType=service&authIndexValue=ADAM';
+const sessionUrl = 'https://dwp.frdpcloud.com/openam/json/sessions?_action=getSessionInfo';
+const usersUrl = 'https://dwp.frdpcloud.com/openam/json/users';
+
+const ssoHeaderName = 'iPlanetDirectoryPro';
 
 function processPayload(req, res, payload) {
-  console.log('writing payload to session');
-  req.session.payload = payload;
-
   console.log('checking if payload contains token');
   if (payload.tokenId) {
-    res.send('Token: ' + payload.tokenId);
+    delete req.session.payload;
+    req.session.tokenId = payload.tokenId;
+    res.redirect('/profile');
     return;
   }
+
+  console.log('writing payload to session');
+  req.session.payload = payload;
 
   console.log('checking if payload contains redirect');
   const redirect = extractRedirect(payload.callbacks);
@@ -97,17 +103,15 @@ router.get('/scp/callback', async (req, res) => {
   const {payload} = req.session;
 
   try {
-    const jsonBody = {
-      ...req.query,
-      authId: payload.authId,
-    };
-
     console.log('requesting callback payload');
     const response = await axios.request({
       url: authenticateUrl,
       method: 'post',
       params: req.query,
-      data: jsonBody,
+      data: {
+        ...req.query,
+        authId: payload.authId,
+      },
       headers: {
         'Content-Type': 'application/json',
         'Accept-API-Version': 'protocol=1.0,resource=2.1',
@@ -117,6 +121,49 @@ router.get('/scp/callback', async (req, res) => {
     processPayload(req, res, response.data);
   } catch (err) {
     if (err.response) {
+      res.json(err.response.data);
+    } else {
+      res.type('text').send(err.stack);
+    }
+  }
+});
+
+router.get('/profile', async (req, res) => {
+  console.log('checking session contains token');
+  if (!req.session || !req.session.tokenId) {
+    res.redirect('/auth');
+    return;
+  }
+
+  try {
+    console.log('requesting session info');
+    const sessionRes = await axios.request({
+      url: sessionUrl,
+      method: 'post',
+      headers: {
+        [ssoHeaderName]: req.session.tokenId,
+        'Content-Type': 'application/json',
+        'Accept-API-Version': 'protocol=1.0,resource=2.1',
+      },
+    });
+
+    console.log('requesting user data');
+    const userRes = await axios.request({
+      url: `${usersUrl}/${sessionRes.data.username}`,
+      method: 'get',
+      headers: {
+        [ssoHeaderName]: req.session.tokenId,
+        'Content-Type': 'application/json',
+        'Accept-API-Version': 'protocol=1.0,resource=2.1',
+      },
+    });
+
+    res.render('profile.njk', {
+      profile: userRes.data,
+    });
+  } catch (err) {
+    if (err.response) {
+      console.log(err.response.data);
       res.json(err.response.data);
     } else {
       res.type('text').send(err.stack);
