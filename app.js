@@ -12,6 +12,11 @@ const eligibilityRouter = require("./routes/eligibility");
 const profileRouter = require("./routes/profile");
 const todolistRouter = require("./routes/todolist");
 const duplicateRouter = require("./routes/duplicate");
+const additionalInfoRouter = require("./routes/additionalinfo");
+const selectMfaRouter = require("./routes/selectmfa");
+const otpRouter = require("./routes/otp");
+const qrCodeRouter = require("./routes/qrcode");
+const authenticatorCodeRouter = require("./routes/authenticatorcode");
 
 const app = express();
 
@@ -48,5 +53,10 @@ app.use("/eligibility", eligibilityRouter);
 app.use("/profile", profileRouter);
 app.use("/todolist", todolistRouter);
 app.use("/duplicate-gateway-account", duplicateRouter);
+app.use("/additional-information", additionalInfoRouter);
+app.use("/select-mfa", selectMfaRouter);
+app.use("/enter-otp", otpRouter);
+app.use("/scan-qr-code", qrCodeRouter);
+app.use("/google-authenticator-code", authenticatorCodeRouter);
 
 module.exports = app;
