@@ -1,0 +1,10 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+    <ul class="govuk-list">
+        <li>Username: <b>{{ profile.username }}</b></li>
+        <li>Name: <b>{{ profile.givenName }} {{ profile.sn }}</b></li>
+        <li>Email: <b>{{ profile.mail }}</b></li>
+        <li>DOB: <b>{{ profile.title }}</b></li>
+    </ul>
+{% endblock %}
