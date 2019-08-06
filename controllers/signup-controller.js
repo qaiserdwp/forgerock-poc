@@ -18,7 +18,7 @@ exports.start = (req, res, next) => {
   req.session.signup.username = gotoUrl.searchParams.get("username");
   req.session.signup.firstname = gotoUrl.searchParams.get("firstname");
   req.session.signup.lastname = gotoUrl.searchParams.get("lastname");
-  res.redirect("/dwpauth/signup/process");
+  res.redirect(res.locals.relativePath + "/dwpauth/signup/process");
   //res.send(req.session.signup.service);
 };
 

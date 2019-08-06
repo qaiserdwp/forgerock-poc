@@ -14,7 +14,7 @@ exports.start = (req, res, next) => {
     req.session.signin = {};
   }
   req.session.signin.service = req.query.service;
-  res.redirect("/dwpauth/signin/process");
+  res.redirect(res.locals.relativePath + "/dwpauth/signin/process");
 };
 
 exports.process = async (req, res, next) => {

@@ -13,7 +13,7 @@ exports.start = (req, res, next) => {
   if (!req.session.pr) {
     req.session.pr = {};
   }
-  res.redirect("/dwpauth/pr/process");
+  res.redirect(res.locals.relativePath + "/dwpauth/pr/process");
 };
 
 exports.process = async (req, res, next) => {
