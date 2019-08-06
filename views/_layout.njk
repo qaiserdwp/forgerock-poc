@@ -5,6 +5,7 @@
 {% from "header/macro.njk" import govukHeader %}
 {% from "phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "footer/macro.njk" import govukFooter %}
+{% from "error-summary/macro.njk" import govukErrorSummary %}
 
 {% set htmlClasses = "app-html-class" %}
 {% set htmlLang = "en" %}
@@ -15,12 +16,12 @@
 {% block pageTitle %}Federated Access Demo{% endblock %}
 
 {% block headIcons %}
-    {{ super() }}
+  {{ super() }}
 {% endblock %}
 
 {% block head %}
   <!--[if !IE 8]><!-->
-    <link href="/stylesheets/application.css" rel="stylesheet" />
+  <link href="/stylesheets/application.css" rel="stylesheet"/>
   <!--<![endif]-->
 
   {# For Internet Explorer 8, you need to compile specific stylesheet #}
@@ -36,6 +37,10 @@
 {% endblock %}
 
 {% block bodyStart %}
+  <script src="/javascripts/jquery/jquery.min.js"></script>
+  <script src="/javascripts/jquery-validation/jquery.validate.min.js"></script>
+  <script src="/javascripts/validation.js"></script>
+  <script src="/javascripts/jquery-validation/additional-methods.min.js"></script>
 {% endblock %}
 
 {% block skipLink %}
@@ -72,6 +77,18 @@
     href: "#",
     text: "Back"
   }) }}
+  {{ govukErrorSummary({
+  titleText: "There is a problem",
+  attributes: {
+    style: "display: none;"
+  },
+  errorList: [
+    {
+      text: "-",
+      href: "-"
+    }
+  ]
+}) }}
 {% endblock %}
 
 {% block content %}
@@ -105,4 +122,5 @@
 
 {% block bodyEnd %}
   <script src="/govuk-frontend/all.js"></script>
+
 {% endblock %}

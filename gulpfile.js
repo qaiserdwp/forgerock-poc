@@ -12,4 +12,14 @@ function defaultTask(cb) {
     .pipe(gulp.dest("public/stylesheets"));
 }
 
+gulp.task("javascript", done => {
+  gulp
+    .src("./node_modules/jquery/dist/**/*")
+    .pipe(gulp.dest("./public/javascripts/jquery"));
+  gulp
+    .src("./node_modules/jquery-validation/dist/**/*")
+    .pipe(gulp.dest("./public/javascripts/jquery-validation"));
+  done();
+});
+
 exports.default = defaultTask;

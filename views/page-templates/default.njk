@@ -1,0 +1,49 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+
+    <form action="/dwpauth/process" method="post" id="input_form" name="input_form">
+        {# <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-heading-xl">
+                Sign In
+            </h1>
+    </legend> #}
+
+        {{ callbacks | safe }}
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+            Continue
+        </button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#input_form').submit(function (e) {
+                $('#input_form').validate(validationRules);
+                if (!$('#input_form').valid()) {
+                    e.preventDefault();
+                }
+            });
+        })
+        var validationRules = {
+            onfocusout: false,
+            onkeyup: false,
+            rules: {
+                "callbacks[0]": {
+                    required: true
+                },
+                "callbacks[1]": {
+                    required: true
+                }
+            },
+            messages: {
+                "callbacks[0]": {
+                    required: "Email address is required"
+                },
+                "callbacks[1]": {
+                    required: "Password is required"
+                }
+            }
+        }
+    </script>
+{% endblock %}

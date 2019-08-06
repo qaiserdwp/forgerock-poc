@@ -1,0 +1,46 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+    <div class="main">
+        <div>
+            <h1 class="govuk-heading-xl">Enter your email address</h1>
+            <p class="govuk-body-l">We'll send a password reset code to you.</p>
+        </div>
+    </div>
+    <form action="/dwpauth/pr/process" method="post" id="input_form">
+
+        {{ callbacks | safe }}
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+            Send code
+        </button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#input_form').submit(function (e) {
+
+                $('#input_form').validate(validationRules);
+                if (!$('#input_form').valid()) {
+                    e.preventDefault();
+                }
+            });
+        })
+        var validationRules = {
+            onfocusout: false,
+            onkeyup: false,
+            rules: {
+                "callbacks[0]": {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                "callbacks[0]": {
+                    required: "Email address is required",
+                    email: "Enter a valid email address"
+                }
+            }
+        }
+    </script>
+{% endblock %}

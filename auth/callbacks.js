@@ -1,56 +1,81 @@
-function renderChoiceCallback(renderer, {output}, callbackIndex) {
-  const prompt = output.find(chunk => chunk.name === 'prompt');
-  const choices = output.find(chunk => chunk.name === 'choices');
-  const defaultChoice = output.find(chunk => chunk.name === 'defaultChoice');
+const _ = require("lodash");
+const templateMappings = require("./page-template-mappings");
 
-  return renderer('auth/callbacks/choice.njk', {
+function renderChoiceCallback(renderer, { output }, callbackIndex) {
+  const prompt = output.find(chunk => chunk.name === "prompt");
+  const choices = output.find(chunk => chunk.name === "choices");
+  const defaultChoice = output.find(chunk => chunk.name === "defaultChoice");
+
+  return renderer("auth/callbacks/choice.njk", {
     callbackIndex,
     prompt: prompt.value,
     choices: choices.value,
-    defaultChoice: defaultChoice.value,
+    defaultChoice: defaultChoice.value
   });
 }
 
-function renderNameCallback(renderer, {output}, callbackIndex) {
-  const prompt = output.find(chunk => chunk.name === 'prompt');
+function renderNameCallback(renderer, { output }, callbackIndex) {
+  const prompt = output.find(chunk => chunk.name === "prompt");
 
-  return renderer('auth/callbacks/name.njk', {
+  return renderer("auth/callbacks/name.njk", {
     callbackIndex,
-    prompt: prompt.value,
+    prompt: prompt.value
   });
 }
 
-function renderPasswordCallback(renderer, {output}, callbackIndex) {
-  const prompt = output.find(chunk => chunk.name === 'prompt');
+function renderPasswordCallback(renderer, { output }, callbackIndex) {
+  const prompt = output.find(chunk => chunk.name === "prompt");
 
-  return renderer('auth/callbacks/password.njk', {
+  return renderer("auth/callbacks/password.njk", {
     callbackIndex,
-    prompt: prompt.value,
+    prompt: prompt.value
   });
 }
 
 exports.renderCallbacks = function renderCallbacks(renderer, callbacks) {
-  return callbacks.map((callback, i) => {
-    switch (callback.type) {
-      case 'ChoiceCallback':
-        return renderChoiceCallback(renderer, callback, i);
-      case 'NameCallback':
-        return renderNameCallback(renderer, callback, i);
-      case 'PasswordCallback':
-        return renderPasswordCallback(renderer, callback, i);
-      default:
-        console.log('unknown callback', callback);
-        throw new Error('unknown callback type');
-    }
-  });
+  let c = callbacks
+    .filter(callback => callback.type !== "MetadataCallback")
+    .map((callback, i) => {
+      switch (callback.type) {
+        case "ChoiceCallback":
+          return renderChoiceCallback(renderer, callback, i);
+        case "NameCallback":
+          return renderNameCallback(renderer, callback, i);
+        case "PasswordCallback":
+          return renderPasswordCallback(renderer, callback, i);
+        default:
+          console.log("unknown callback", callback);
+          throw new Error("unknown callback type");
+      }
+    });
+  return c;
 };
 
 exports.extractRedirect = function extractRedirect(callbacks) {
-  const redirectCallback = callbacks.find(callback => callback.type === 'RedirectCallback');
+  const redirectCallback = callbacks.find(
+    callback => callback.type === "RedirectCallback"
+  );
   if (!redirectCallback) return null;
 
-  const url = redirectCallback.output.find(chunk => chunk.name === 'redirectUrl');
+  const url = redirectCallback.output.find(
+    chunk => chunk.name === "redirectUrl"
+  );
   return {
-    url: url.value,
+    url: url.value
   };
+};
+
+exports.extractTemplateId = function(callbacks) {
+  const metadataCallback = callbacks.find(
+    callback => callback.type === "MetadataCallback"
+  );
+  if (!metadataCallback) {
+    return "page-templates/default.njk";
+  }
+  const templateId = _.get(
+    metadataCallback,
+    "output[0].value.template_id",
+    "NO_TEMPLATE_FOUND"
+  );
+  return _.get(templateMappings, templateId, "page-templates/default.njk");
 };

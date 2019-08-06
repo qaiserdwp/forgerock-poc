@@ -1,0 +1,46 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+    <div class="main">
+        <div>
+            <h1 class="govuk-heading-xl">We’ve sent you an email</h1>
+            <p class="govuk-body-l">It contains your password reset code and should arrive
+                within a few minutes.</p>
+        </div>
+    </div>
+    <form action="/dwpauth/pr/process" method="post" id="input_form">
+
+        {{ callbacks | safe }}
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+            Continue
+        </button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#input_form').submit(function (e) {
+                $('#input_form').validate(validationRules);
+                if (!$('#input_form').valid()) {
+                    e.preventDefault();
+                }
+            });
+        })
+        var validationRules = {
+            onfocusout: false,
+            onkeyup: false,
+            rules: {
+                "callbacks[0]": {
+                    required: true,
+                    pattern: /^\d{6}$/
+                }
+            },
+            messages: {
+                "callbacks[0]": {
+                    required: "Code is required",
+                    pattern: "Code must be 6 digits number"
+                }
+            }
+        }
+    </script>
+{% endblock %}

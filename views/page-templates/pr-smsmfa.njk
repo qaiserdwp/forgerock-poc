@@ -1,0 +1,50 @@
+{% from "details/macro.njk" import govukDetails %}
+
+{% extends "_layout.njk" %}
+
+{% block content %}
+
+    <h1 class="govuk-heading-xl">
+            We’ve sent you a text message
+        </h1>
+
+    <div class="govuk-body-l">
+        <p>It contains a code and should arrive in a few minutes.</p>
+    </div>
+
+    <form action="/dwpauth/pr/process" method="post" id="input_form" name="input_form">
+
+        {{ callbacks | safe }}
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+            Continue
+        </button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#input_form').submit(function (e) {
+                $('#input_form').validate(validationRules);
+                if (!$('#input_form').valid()) {
+                    e.preventDefault();
+                }
+            });
+        })
+        var validationRules = {
+            onfocusout: false,
+            onkeyup: false,
+            rules: {
+                "callbacks[0]": {
+                    required: true,
+                    pattern: /\d{6}/
+                }
+            },
+            messages: {
+                "callbacks[0]": {
+                    required: "Code is required",
+                    pattern: "Code must be six digits"
+                }
+            }
+        }
+    </script>
+{% endblock %}
