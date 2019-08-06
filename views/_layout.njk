@@ -21,7 +21,7 @@
 
 {% block head %}
   <!--[if !IE 8]><!-->
-  <link href="/stylesheets/application.css" rel="stylesheet"/>
+  <link href="{{relativePath}}/stylesheets/application.css" rel="stylesheet"/>
   <!--<![endif]-->
 
   {# For Internet Explorer 8, you need to compile specific stylesheet #}
@@ -37,10 +37,10 @@
 {% endblock %}
 
 {% block bodyStart %}
-  <script src="/javascripts/jquery/jquery.min.js"></script>
-  <script src="/javascripts/jquery-validation/jquery.validate.min.js"></script>
-  <script src="/javascripts/validation.js"></script>
-  <script src="/javascripts/jquery-validation/additional-methods.min.js"></script>
+  <script src="{{relativePath}}/javascripts/jquery/jquery.min.js"></script>
+  <script src="{{relativePath}}/javascripts/jquery-validation/jquery.validate.min.js"></script>
+  <script src="{{relativePath}}/javascripts/validation.js"></script>
+  <script src="{{relativePath}}/javascripts/jquery-validation/additional-methods.min.js"></script>
 {% endblock %}
 
 {% block skipLink %}
@@ -121,6 +121,6 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  <script src="/govuk-frontend/all.js"></script>
+  <script src="{{relativePath}}/govuk-frontend/all.js"></script>
 
 {% endblock %}
