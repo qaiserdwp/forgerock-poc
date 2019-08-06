@@ -4,17 +4,17 @@
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">
+    <h1 class="govuk-heading-xl">
             Choose how we authenticate you
     </h1>
 
-  <form action="/dwpauth/pr/process" method="post" id="input_form" name="input_form">
+    <form action="{{relativePath}}/dwpauth/pr/process" method="post" id="input_form" name="input_form">
 
-    {{ callbacks | safe }}
+        {{ callbacks | safe }}
 
-    <button type="submit" class="govuk-button govuk-!-margin-right-1">
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
             Confirm choice
         </button>
-  </form>
+    </form>
 
 {% endblock %}

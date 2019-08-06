@@ -7,7 +7,7 @@
             <p class="govuk-body-l">We'll send a password reset code to you.</p>
         </div>
     </div>
-    <form action="/dwpauth/pr/process" method="post" id="input_form">
+    <form action="{{relativePath}}/dwpauth/pr/process" method="post" id="input_form">
 
         {{ callbacks | safe }}
 
