@@ -27,6 +27,7 @@ router.post("/signup/process", signupController.processPost);
 
 router.get("/signin/process", signinController.process);
 router.post("/signin/process", signinController.processPost);
+router.get("/signin/success", signinController.gotoSuccessUrl);
 
 router.get("/pr/process", prController.process);
 router.post("/pr/process", prController.processPost);

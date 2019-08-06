@@ -14,7 +14,12 @@ exports.start = (req, res, next) => {
     req.session.signin = {};
   }
   req.session.signin.service = req.query.service;
+  req.session.signin.gotoUrl = req.query.goto;
   res.redirect(res.locals.relativePath + "/dwpauth/signin/process");
+};
+
+exports.gotoSuccessUrl = (req, res, next) => {
+  res.redirect(req.session.signin.gotoUrl);
 };
 
 exports.process = async (req, res, next) => {
@@ -76,6 +81,16 @@ exports.processPost = async (req, res, next) => {
 
 function processPayload(req, res, payload) {
   req.session.signin.payload = payload;
+
+  if (payload.tokenId) {
+    res.cookie("iPlanetDirectoryPro", payload.tokenId, {
+      // domain: process.env.COOKIE_DOMAIN,
+      expires: 0,
+      httpOnly: true
+    });
+    res.redirect(res.locals.relativePath + "/dwpauth/signin/success");
+    return;
+  }
 
   const redirect = extractRedirect(payload.callbacks);
   if (redirect) {
