@@ -31,13 +31,13 @@
             rules: {
                 "callbacks[0]": {
                     required: true,
-                    minlength: 6
+                    pattern: /\d{6}/
                 }
             },
             messages: {
                 "callbacks[0]": {
                     required: 'Code is required',
-                    minlength: 'Code must be 6 characters long'
+                    pattern: 'Code must be 6 digits long'
                 }
             }
         }

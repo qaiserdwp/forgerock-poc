@@ -12,6 +12,7 @@ module.exports = {
   dwpauth_pr_smscode: "page-templates/pr-smsmfa.njk",
   dwpauth_pr_setnewpassword: "page-templates/pr-newpassword.njk",
   dwpuath_pr_successmessage: "page-templates/pr-success-message.njk",
+  dwpauth_pr_validate_otp: "page-templates/pr-validate-otp.njk",
   dwpauth_signin_userpassword: "page-templates/siginin-userpassword.njk",
   dwpauth_signin_mfaoptions: "page-templates/signin-mfaoptions.njk",
   dwpauth_smsmfa: "page-templates/smsmfa.njk",
