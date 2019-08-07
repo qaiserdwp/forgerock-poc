@@ -8,7 +8,8 @@ router.get("/", (req, res, next) => {
   if (
     req.query &&
     req.query.service &&
-    req.query.service.includes("DWPAUTHSIGNUP")
+    (req.query.service.includes("DWPAUTHSIGNUP") ||
+      req.query.service.includes("DWPREGAPPMFA"))
   ) {
     signupController.start(req, res, next);
   } else if (

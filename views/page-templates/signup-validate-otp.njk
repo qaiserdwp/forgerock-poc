@@ -1,22 +1,12 @@
 {% extends "_layout.njk" %}
 
 {% block content %}
-
-    <h1 class="heading-large">
-            Enter your mobile number
-        </h1>
-    <p class="govuk-body-l">It must be a mobile number. Landlines will not be accepted</p>
-    <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-      Why can't I use a landline
-    </span>
-        </summary>
-        <div class="govuk-details__text">
-    We’re going to use this number to check it’s you signing in. As some landlines are used by many
-                    people, they aren’t as secure.
-  </div>
-    </details>
+    <h1 class="govuk-heading-xl">
+                Check your authenticator app
+            </h1>
+    <p class="govuk-body-l">
+                Enter the code for DWP Authenticate.
+            </p>
     <form action="{{relativePath}}/dwpauth/signup/process" method="post" id="input_form">
 
         {{ callbacks | safe }}
@@ -41,13 +31,13 @@
             rules: {
                 "callbacks[0]": {
                     required: true,
-                    pattern: /^((07|7)\d{3}?)\s?\d{3}\s?\d{3}$/
+                    minlength: 6
                 }
             },
             messages: {
                 "callbacks[0]": {
-                    required: 'Enter phone number',
-                    pattern: 'Enter a valid number'
+                    required: 'Code is required',
+                    minlength: 'Code must be 6 characters long'
                 }
             }
         }

@@ -1,0 +1,45 @@
+{% extends "_layout.njk" %}
+
+{% block content %}
+    <h1 class="govuk-heading-xl">
+                Check your authenticator app
+            </h1>
+    <p class="govuk-body-l">
+                Enter the code for DWP Authenticate.
+            </p>
+    <form action="{{relativePath}}/dwpauth/signin/process" method="post" id="input_form">
+
+        {{ callbacks | safe }}
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+            Continue
+        </button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#input_form').submit(function (e) {
+                $('#input_form').validate(validationRules);
+                if (!$('#input_form').valid()) {
+                    e.preventDefault();
+                }
+            });
+        });
+        var validationRules = {
+            onfocusout: false,
+            onkeyup: false,
+            rules: {
+                "callbacks[0]": {
+                    required: true,
+                    minlength: 6
+                }
+            },
+            messages: {
+                "callbacks[0]": {
+                    required: 'Code is required',
+                    minlength: 'Code must be 6 characters long'
+                }
+            }
+        }
+    </script>
+{% endblock %}

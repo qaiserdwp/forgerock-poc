@@ -5,7 +5,8 @@ const pageTemplateConfig = require("../auth/page-template-mappings");
 const {
   renderCallbacks,
   extractRedirect,
-  extractTemplateId
+  extractTemplateId,
+  getQrImage
 } = require("../auth/callbacks");
 const nunjucks = require("nunjucks");
 
@@ -93,8 +94,11 @@ function processPayload(req, res, payload) {
   }
 
   const pageTemplate = extractTemplateId(payload.callbacks);
+  const qrImage = getQrImage(payload.callbacks);
+
   res.render(pageTemplate, {
-    callbacks: renderCallbacks(nunjucks.render, payload.callbacks)
+    callbacks: renderCallbacks(nunjucks.render, payload.callbacks),
+    qrImage
   });
 }
 

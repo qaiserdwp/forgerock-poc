@@ -1,32 +1,26 @@
 {% extends "_layout.njk" %}
 
 {% block content %}
-    <div class="main">
-        <div>
-            <h1 class="govuk-heading-xl">Create a new password</h1>
-            <p class="govuk-body-l">Your password must be 8 characters long.</p>
-        </div>
-        <div class="form-group">
-            <p>It also must contain:</p>
-        </div>
-        <ul class="govuk-list">
-            <li>1 upper case letter</li>
-            <li>1 lower case letter</li>
-            <li>1 number</li>
-            <li>1 special character (e.g '!', '?' or '%')</li>
-        </ul>
-
-        <p class="form-group">Example password: Bu22??as</p>
-    </div>
-    <form action="{{relativePath}}/dwpauth/pr/process" method="post" id="input_form">
-
-        {{ callbacks | safe }}
-
-        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+    <div>
+        <h1 class="govuk-heading-xl">Set up your smartphone or tablet </h1>
+        <p class="govuk-body-l">You need to:</p>
+        <ol class="govuk-list govuk-list--number">
+            <li>Download an authenticator app (such as Google Authenticator or Microsoft Authenticator)</li>
+            <li>
+                Scan this QR code using the app:<br>
+                <img src="{{ qrImage }}" style="width: 200px; height: 200px;"/>
+            </li>
+            <li>Check the app for your 6 digit access code. The code refreshes every 30 seconds.</li>
+        </ol>
+        <form action="{{relativePath}}/dwpauth/signup/process" method="post" id="input_form">
+            <div style="display: none;">
+                {{ callbacks | safe }}
+            </div>
+            <button type="submit" class="govuk-button govuk-!-margin-right-1">
             Continue
         </button>
-    </form>
-
+        </form>
+    </div>
     <script type="text/javascript">
         $(function () {
             $('#input_form').submit(function (e) {
@@ -57,7 +51,7 @@
                     pattern: 'Your password needs to include 1 or more upper case letters, lower case letters, numbers and special characters (e.g \'!\', \'?\' or \'%\').',
                     notEqual: 'Do not use example password'
                 },
-                "callbacks[1]": {
+                "callbacks[0]": {
                     equalTo: 'Your passwords don\'t match. Enter them again.'
                 }
             }

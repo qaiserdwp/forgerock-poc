@@ -79,3 +79,13 @@ exports.extractTemplateId = function(callbacks) {
   );
   return _.get(templateMappings, templateId, "page-templates/default.njk");
 };
+
+exports.getQrImage = function(callbacks) {
+  const metadataCallback = callbacks.find(
+    callback => callback.type === "MetadataCallback"
+  );
+  if (!metadataCallback) {
+    return null;
+  }
+  return _.get(metadataCallback, "output[0].value.qrimage", null);
+};
