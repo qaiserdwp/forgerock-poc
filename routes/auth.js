@@ -30,8 +30,8 @@ function processPayload(req, res, payload) {
     res.redirect(redirect.url);
     return;
   }
-
   console.log('rendering callbacks');
+  console.log(payload.callbacks)
   res.render('auth/flow.njk', {
     callbacks: renderCallbacks(nunjucks.render, payload.callbacks),
   });
@@ -85,7 +85,8 @@ router.post('/auth', async (req, res) => {
     processPayload(req, res, response.data);
   } catch (err) {
     if (err.response) {
-      res.json(err.response.data);
+      res.redirect('401');
+      console.log(res.json(err.response.data));
     } else {
       res.type('text').send(err.stack);
     }
@@ -95,7 +96,7 @@ router.post('/auth', async (req, res) => {
 router.get('/scp/callback', async (req, res) => {
   console.log('checking session contains previous payload');
   if (!req.session || !req.session.payload) {
-    res.status(401).send('Invalid session payload');
+    res.render('401.njk');
     return;
   }
 
@@ -121,7 +122,20 @@ router.get('/scp/callback', async (req, res) => {
     processPayload(req, res, response.data);
   } catch (err) {
     if (err.response) {
-      res.json(err.response.data);
+      console.log(err.response.data)
+      var errorMessage = JSON.stringify(err.response.data);
+      var objectValue = JSON.parse(errorMessage);
+      var errorDetail = objectValue['detail'];
+      var errorUrl = errorDetail['failureUrl'];
+      var errorMessage;
+      console.log(errorUrl);
+      if(errorMessage == 'failDuplicate' || errorUrl == 'failDuplicate'){
+          res.render('duplicate/duplicate-gateway-account.njk');
+      }else{
+          res.render('401.njk');
+      }
+
+      // res.json(err.response.data);
     } else {
       res.type('text').send(err.stack);
     }
@@ -158,7 +172,7 @@ router.get('/profile', async (req, res) => {
       },
     });
 
-    res.render('profile.njk', {
+    res.render('profile/profile.njk', {
       profile: userRes.data,
     });
   } catch (err) {

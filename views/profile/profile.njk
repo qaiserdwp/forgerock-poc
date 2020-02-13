@@ -1,56 +1,41 @@
 {% extends "_layout.njk" %}
-{% from "table/macro.njk" import govukTable %}
-
 {% block content %}
+
 <h1 class="govuk-heading-xl">Profile</h1>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-{{ govukTable({
-firstCellIsHeader: true,
-rows: [
-[
-{
-text: "Username"
-},
-{
-text: "google-103506679181169841890"
-}
-],
-[
-{
-text: "First name"
-},
-{
-text: "ForgeRock"
-}
-],
-[
-{
-text: "Last name"
-},
-{
-text: "PoC"
-}
-],
-[
-{
-text: "Email"
-},
-{
-text: "forgerock.dwp.poc@gmail.com"
-}
-],
-[
-{
-text: "Telephone"
-},
-{
-text: "0123456789"
-}
-]
-]
-}) }}
+        <table class="govuk-table">
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Username</th>
+                <td class="govuk-table__cell">{{ profile.username }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">First name</th>
+                <td class="govuk-table__cell">{{ profile.givenName }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Last name</th>
+                <td class="govuk-table__cell">{{ profile.sn }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Email</th>
+                <td class="govuk-table__cell">{{ profile.mail }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Date of birth</th>
+                <td class="govuk-table__cell">{{ profile.title }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Telephone</th>
+                <td class="govuk-table__cell">{{ profile.telephoneNumber }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+{% if 'govgateway' in profile.username %}
+    <p class="govuk-body"><a href="signout">Sign out of Government Gateway</a></p>
+{% endif %}
 <p class="govuk-body"><a href="todolist">To do list</a></p>
 {% endblock %}

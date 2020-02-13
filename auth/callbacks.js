@@ -2,7 +2,6 @@ function renderChoiceCallback(renderer, {output}, callbackIndex) {
   const prompt = output.find(chunk => chunk.name === 'prompt');
   const choices = output.find(chunk => chunk.name === 'choices');
   const defaultChoice = output.find(chunk => chunk.name === 'defaultChoice');
-
   return renderer('auth/callbacks/choice.njk', {
     callbackIndex,
     prompt: prompt.value,
@@ -38,6 +37,8 @@ exports.renderCallbacks = function renderCallbacks(renderer, callbacks) {
         return renderNameCallback(renderer, callback, i);
       case 'PasswordCallback':
         return renderPasswordCallback(renderer, callback, i);
+      case 'TextOutputCallback':
+        return renderNameCallback(renderer, callback, i);
       default:
         console.log('unknown callback', callback);
         throw new Error('unknown callback type');

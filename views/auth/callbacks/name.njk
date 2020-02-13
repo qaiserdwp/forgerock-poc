@@ -1,6 +1,18 @@
+{% set fieldLabel = "" %}
+{% set fieldHint = "" %}
+{% set fieldSize = 'govuk-input--width-10' %}
+{% if prompt == 'Date of Birth (dd/mm/yy)' %}
+    {% set fieldLabel = "Date of birth" %}
+    {% set fieldHint = "We need this to help us find your customer record. Use dd/mm/yy." %}
+{% elseif prompt == 'Phone Number' %}
+    {% set fieldLabel = "Mobile phone number" %}
+    {% set fieldHint = "We will use this to send you a confirmation code." %}
+    {% set fieldSize = 'govuk-input--width-20' %}
+{% endif %}
 <div class="govuk-form-group">
     <div class="govuk-form-group">
-        <label class="govuk-label" for="input-{{ callbackIndex }}">{{ prompt }}</label>
-        <input class="govuk-input govuk-!-width-govuk-grid-column-full" type="text" id="input-{{ callbackIndex }}" name="callbacks[{{ callbackIndex }}]" />
+        <label class="govuk-label" for="input-{{ callbackIndex }}">{{ fieldLabel }}</label>
+        <span id="event-name-hint" class="govuk-hint">{{ fieldHint }}</span>
+        <input class="govuk-input {{ fieldSize }}" type="text" id="input-{{ callbackIndex }}" name="callbacks[{{ callbackIndex }}]" />
     </div>
 </div>
